@@ -1,7 +1,14 @@
-import streamlit as st
 import google.generativeai as genai
 from audio import transcribe_audio_data, text_to_speech
 from audio_recorder_streamlit import audio_recorder
+
+import streamlit as st
+
+try:
+    gemini_api_key = st.secrets["GEMINI_API_KEY"]
+    genai.configure(api_key=gemini_api_key)
+except KeyError:
+    st.error("API key missing: Please set the GEMINI_API_KEY in the secrets.")
 
 # Configure Gemini API
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
